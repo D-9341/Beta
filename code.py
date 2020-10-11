@@ -462,25 +462,25 @@ async def emb_content(ctx, arg):
 @commands.cooldown(1, 20, commands.BucketType.default)
 async def say_everyone(ctx, arg = None, text = None, t = None, d = None, img = None, f = None, c = None, a : discord.Member = None):
     await ctx.message.delete()
-        if c == None:
-            c = ctx.author.color
-        else:
-            c = int('0x' + c, 16)
-        if a == None:
-            a = ctx.author
-        if img == None:
-            img = ('')
-        if f == None:
-            f = ('')
-        emb = discord.Embed(title = t, description = d, colour = c)
-        emb.set_author(name = a, icon_url = a.avatar_url)
-        emb.set_image(url = img)
-        emb.set_thumbnail(url = f)
-        emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
-        if arg == 'noembed':
-            await ctx.send('@everyone ' + text)
-        elif arg != 'noembed':
-            await ctx.send('@everyone', embed = emb)
+    if c == None:
+        c = ctx.author.color
+    else:
+        c = int('0x' + c, 16)
+    if a == None:
+        a = ctx.author
+    if img == None:
+        img = ('')
+    if f == None:
+        f = ('')
+    emb = discord.Embed(title = t, description = d, colour = c)
+    emb.set_author(name = a, icon_url = a.avatar_url)
+    emb.set_image(url = img)
+    emb.set_thumbnail(url = f)
+    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
+    if arg == 'noembed':
+        await ctx.send('@everyone ' + text)
+    elif arg != 'noembed':
+        await ctx.send('@everyone', embed = emb)
     
 @client.command(aliases = ['Say', 'SAY'])
 @commands.has_permissions(manage_channels = True)
