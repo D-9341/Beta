@@ -27,13 +27,9 @@ class TimeConverter(commands.Converter):
             except ValueError:
                 raise commands.BadArgument(f'{key} не число!')
         return time
+#test space
 
-guilds = [693929822543675455, 735874149578440855]
-         #SPELL               #test guild
-
-#Events
-
-#Events
+#test space
 
 #Mod
 @client.command()
@@ -43,6 +39,7 @@ async def dm(ctx, member: discord.User, *, text):
     await ctx.message.delete()
     emb = discord.Embed(description = f'{text}', colour = ctx.author.color)
     emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
+    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     await member.send(embed = emb)
 
 @client.command(aliases = ['Kick', 'KICK'])
@@ -54,18 +51,19 @@ async def kick(ctx, member: discord.Member, *, reason: str = None):
             if reason == None:
                 reason = 'Не указана.'
             if ctx.author.top_role == member.top_role:
-                emb = discord.Embed(description = f'{ctx.author.mention}, ваша высшая роль равна высшей роли {member.mention}. Кик отклонён.', colour = discord.Color.red())
+                emb = discord.Embed(description = f'{ctx.author.mention}, ваша высшая роль равна высшей роли {member.mention}. Кик отклонён.', colour = discord.Color.green())
                 await ctx.send(embed = emb)
             else:
                 emb = discord.Embed(colour = member.color)
                 emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
                 emb.add_field(name = 'Был кикнут', value = member.mention)
                 emb.add_field(name = 'По причине', value = reason)
+                emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
                 await ctx.send(embed = emb)
                 await member.kick(reason = reason)
-        else:
-            emb = discord.Embed(description = f'Извините, {ctx.author.mention}, но вы не можете кикнуть моего создателя!', colour = discord.Color.red())
-            await ctx.send(embed = emb)
+    else:
+        emb = discord.Embed(description = f'Извините, {ctx.author.mention}, но вы не можете кикнуть моего создателя!', colour = discord.Color.green())
+        await ctx.send(embed = emb)
 
 @client.command(aliases = ['Ban', 'BAN'])
 @commands.cooldown(1, 10, commands.BucketType.default)
@@ -76,17 +74,18 @@ async def ban(ctx, member: discord.Member, *, reason = None):
         if reason == None:
             reason = 'Не указана.'
         if ctx.author.top_role == member.top_role:
-            emb = discord.Embed(description = f'{ctx.author.mention}, ваша высшая роль равна высшей роли {member.mention}. Бан отклонён.', colour = discord.Color.red())
+            emb = discord.Embed(description = f'{ctx.author.mention}, ваша высшая роль равна высшей роли {member.mention}. Бан отклонён.', colour = discord.Color.green())
             await ctx.send(embed = emb)
         else:
             emb = discord.Embed(colour = member.color)
             emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
             emb.add_field(name = 'Был кикнут', value = member.mention)
             emb.add_field(name = 'По причине', value = reason)
+            emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
             await ctx.send(embed = emb)
             await member.ban(reason = reason)
     else:
-        emb = discord.Embed(description = f'Извините, {ctx.author.mention}, но вы не можете забанить моего создателя!', colour = discord.Color.red())
+        emb = discord.Embed(description = f'Извините, {ctx.author.mention}, но вы не можете забанить моего создателя!', colour = discord.Color.green())
         await ctx.send(embed = emb)
 
 @client.command(aliases = ['Give', 'GIVE'])
@@ -107,6 +106,7 @@ async def give(ctx, member: discord.Member, *, role: discord.Role):
             emb.add_field(name = 'Была выдана роль', value = f'{role.mention} | {role.name} | ID {role.id}')
             emb.add_field(name = 'Выдана:', value = member.mention)
             emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
+            emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
             await channel.send(embed = emb)
     else:
         emb = discord.Embed(description = f'{ctx.author.mention}, я не могу найти {role.mention} в списке ролей.', colour = member.color, timestamp = ctx.message.created_at)
@@ -130,6 +130,7 @@ async def take(ctx, member: discord.Member, *, role: discord.Role):
             emb.add_field(name = 'Была забрана роль', value = f'{role.mention} | {role.name} | ID {role.id}')
             emb.add_field(name = 'Забрана:', value = member.mention)
             emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
+            emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
             await channel.send(embed = emb)
     else:
         emb = discord.Embed(description = f'{ctx.author.mention}, я не могу найти {role.mention} в списке ролей.', colour = member.color, timestamp = ctx.message.created_at)
@@ -150,6 +151,7 @@ async def mute(ctx, member: discord.Member, time: TimeConverter, *, reason: str 
             emb.add_field(name = 'В муте', value = f'{member.mention}')
             emb.add_field(name = 'По причине', value = reason)
             emb.add_field(name = 'Время мута', value = f'{time}s')
+            emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
             await ctx.send(embed = emb, delete_after = time)
             await asyncio.sleep(time)
             if role != None:
@@ -158,18 +160,19 @@ async def mute(ctx, member: discord.Member, time: TimeConverter, *, reason: str 
                     emb.add_field(name = 'Размучен по истечению времени', value = member.mention)
                     emb.add_field(name = 'Был в муте по причине', value = reason)
                     emb.add_field(name = 'Время мута составляло', value = f'{time}s')
+                    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
                     await member.remove_roles(role)
                     await ctx.send(f'{member.mention}', embed = emb)
                 else:
-                    emb = discord.Embed(description = f'Снятие мута для {member.mention} не требуется. Роли Muted не обнаружено в списке ролей участника.', colour = discord.Color.red())
+                    emb = discord.Embed(description = f'Снятие мута для {member.mention} не требуется. Роли Muted не обнаружено в списке ролей участника.', colour = discord.Color.green())
                     await ctx.send(embed = emb)
             else:
-                emb = discord.Embed(description = f'{ctx.author.mention}, Я не могу снять мут у {member.mention} из-за того, что роль Muted была удалена/отредактирована!', colour = discord.Color.red(), timestamp = ctx.message.created_at)
+                emb = discord.Embed(description = f'{ctx.author.mention}, Я не могу снять мут у {member.mention} из-за того, что роль Muted была удалена/отредактирована!', colour = discord.Color.green(), timestamp = ctx.message.created_at)
                 await ctx.send(embed = emb)
         else:
             await ctx.guild.create_role(name = 'Muted', colour = discord.Colour(0x000001))
             role = discord.utils.get(ctx.guild.roles, name = 'Muted')
-            emb1 = discord.Embed(description = f'{ctx.author.mention}, По причине того, что я не нашёл нужную роль, была создана роль {role.name} с цветом {role.colour}.', colour = discord.Color.red(), timestamp = ctx.message.created_at)
+            emb1 = discord.Embed(description = f'{ctx.author.mention}, По причине того, что я не нашёл нужную роль, была создана роль {role.name} с цветом {role.colour}.', colour = discord.Color.green(), timestamp = ctx.message.created_at)
             emb1.set_footer(text = 'Это сообщение должно показываться только 1 раз. Иначе, роль была удалена/отредактирована')
             await ctx.send(embed = emb1)
             await asyncio.sleep(3)
@@ -180,6 +183,7 @@ async def mute(ctx, member: discord.Member, time: TimeConverter, *, reason: str 
             emb.add_field(name = 'В муте', value = f'{member.mention}')
             emb.add_field(name = 'По причине', value = reason)
             emb.add_field(name = 'Время мута', value = f'{time}s')
+            emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
             await ctx.send(embed = emb, delete_after = time)
             await asyncio.sleep(time)
             if role != None:
@@ -188,13 +192,16 @@ async def mute(ctx, member: discord.Member, time: TimeConverter, *, reason: str 
                     emb.add_field(name = 'Размучен по истечению времени', value = member.mention)
                     emb.add_field(name = 'По причине', value = reason)
                     emb.add_field(name = 'Время мута составляло', value = f'{time}s')
+                    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
                     await ctx.send(f'{member.mention}', embed = emb)
                     await member.remove_roles(role)
                 else:
-                    emb = discord.Embed(description = f'Снятие мута для {member.mention} не требуется. Роли Muted не обнаружено в списке ролей участника.', colour = discord.Color.red())
+                    emb = discord.Embed(description = f'Снятие мута для {member.mention} не требуется. Роли Muted не обнаружено в списке ролей участника.', colour = discord.Color.green())
+                    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
                     await ctx.send(embed = emb)    
     else:
-        emb = discord.Embed(description = f'Извините, {ctx.author.mention}, но вы не можете замутить моего создателя!', colour = discord.Color.red())
+        emb = discord.Embed(description = f'Извините, {ctx.author.mention}, но вы не можете замутить моего создателя!', colour = discord.Color.green())
+        emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
         await ctx.send(embed = emb)
         
 @client.command(aliases = ['Unmute', 'UNMUTE'])
@@ -210,12 +217,15 @@ async def unmute(ctx, member: discord.Member, *, reason = None):
             emb = discord.Embed(title = f'Принудительное снятие мута у {member}', colour = member.color, timestamp = ctx.message.created_at)
             emb.add_field(name = 'Снял мут', value = ctx.author.mention)
             emb.add_field(name = 'По причине', value = reason)
+            emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
             await ctx.send(embed = emb)
         else:
             emb = discord.Embed(description = 'Снятие мута не требуется. Роли Muted не обнаружено в списке ролей участника.')
+            emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
             await ctx.send(embed = emb)
     else:
-        emb = discord.Embed(description = f'{ctx.author.mention}, Я не могу снять мут у {member.mention} из-за того, что роль Muted была удалена/отредактирована!', colour = discord.Color.red(), timestamp = ctx.message.created_at)
+        emb = discord.Embed(description = f'{ctx.author.mention}, Я не могу снять мут у {member.mention} из-за того, что роль Muted была удалена/отредактирована!', colour = discord.Color.green(), timestamp = ctx.message.created_at)
+        emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
         await ctx.send(embed = emb)
 
 @client.command(aliases = ['Clear', 'CLEAR'])
@@ -224,22 +234,26 @@ async def unmute(ctx, member: discord.Member, *, reason = None):
 async def clear(ctx, amount: int, confirm: str = None):
     await ctx.message.delete()
     if amount == 0:
-        emb = discord.Embed(description = 'Удалять 0 сообщений?', colour = discord.Color.red())
+        emb = discord.Embed(description = 'Удалять 0 сообщений?', colour = discord.Color.green())
         await ctx.send(embed = emb, delete_after = 3)
     elif amount == 1:
-        emb = discord.Embed(description = f'удалено {amount} сообщение', colour = discord.Color.red())
+        emb = discord.Embed(description = f'удалено {amount} сообщение', colour = discord.Color.green())
+        emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
         await ctx.channel.purge(limit = amount)
         await ctx.send(embed = emb, delete_after = 1)
     elif amount == 2:
-        emb = discord.Embed(description = f'удалено {amount} сообщения', colour = discord.Color.red())
+        emb = discord.Embed(description = f'удалено {amount} сообщения', colour = discord.Color.green())
+        emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
         await ctx.channel.purge(limit = amount)
         await ctx.send(embed = emb, delete_after = 1)
     elif amount == 3:
-        emb = discord.Embed(description = f'удалено {amount} сообщения', colour = discord.Color.red())
+        emb = discord.Embed(description = f'удалено {amount} сообщения', colour = discord.Color.green())
+        emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
         await ctx.channel.purge(limit = amount)
         await ctx.send(embed = emb, delete_after = 1)
     elif amount == 4:
-        emb = discord.Embed(description = f'удалено {amount} сообщения', colour = discord.Color.red())
+        emb = discord.Embed(description = f'удалено {amount} сообщения', colour = discord.Color.green())
+        emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
         await ctx.channel.purge(limit = amount)
         await ctx.send(embed = emb, delete_after = 1)
     elif amount >= 10:
@@ -249,10 +263,12 @@ async def clear(ctx, amount: int, confirm: str = None):
             await ctx.channel.purge(limit = amount + 1)
             await ctx.send(f'удалено {amount} сообщений', delete_after = 2)
         if confirm == None:
-            emb = discord.Embed(description = f'{ctx.author.mention}, для выполнения этой команды мне нужно ваше подтвеждение! (чувствительно к регистру)', colour = discord.Color.red())
+            emb = discord.Embed(description = f'{ctx.author.mention}, для выполнения этой команды мне нужно ваше подтвеждение! (чувствительно к регистру)', colour = discord.Color.green())
+            emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
             await ctx.send(embed = emb)
     else:
-        emb = discord.Embed(description = f'удалено {amount} сообщений', colour = discord.Color.red())
+        emb = discord.Embed(description = f'удалено {amount} сообщений', colour = discord.Color.green())
+        emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
         await ctx.channel.purge(limit = amount)
         await ctx.send(embed = emb, delete_after = 1)
 #Mod
@@ -265,13 +281,14 @@ async def guild(ctx, guild: discord.Guild = None):
     if guild == None:
         guild = ctx.guild
     await ctx.message.delete()
-    emb = discord.Embed(title = f'Информация о {guild}', colour = discord.Color.red(), timestamp = ctx.message.created_at)
+    emb = discord.Embed(title = f'Информация о {guild}', colour = discord.Color.green(), timestamp = ctx.message.created_at)
     emb.add_field(name = 'ID сервера', value = guild.id)
     emb.add_field(name = 'Уровень сервера', value = guild.premium_tier)
     emb.add_field(name = 'Люди, бустящие сервер', value = guild.premium_subscribers)
     emb.add_field(name = 'Владелец сервера', value = guild.owner.mention, inline = False)
     emb.add_field(name = 'Количество человек на сервере', value = guild.member_count)
     emb.add_field(name = 'Дата создания сервера', value = guild.created_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"), inline = False)
+    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     emb.set_thumbnail(url = guild.icon_url)
     await ctx.send(embed = emb)
 
@@ -299,6 +316,7 @@ async def role(ctx, *, role: discord.Role):
     emb.add_field(name = 'Позиция в списке', value = role.position)
     emb.add_field(name = 'Создана', value = role.created_at.strftime("%A, %#d %B %Y, %I:%M %p UTC"), inline = False)
     emb.add_field(name = 'Показывает участников отдельно?', value = role.hoist)
+    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     await ctx.send(embed = emb)
     
 @client.command(aliases = ['Avatar', 'AVATAR'])
@@ -310,6 +328,7 @@ async def avatar(ctx, user: discord.Member = None):
     emb = discord.Embed(description = f'[Прямая ссылка]({user.avatar_url})', colour = user.color)
     emb.set_author(name = user)
     emb.set_image(url = user.avatar_url)
+    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     await ctx.send(embed = emb)
     
 @client.command(aliases = ['me', 'Me', 'ME', 'About', 'ABOUT'])
@@ -336,6 +355,7 @@ async def about(ctx, member: discord.Member = None):
     emb.add_field(name = 'Высшая Роль', value = member.top_role.mention, inline = False)
     emb.add_field(name = 'Бот?', value = bot)
     emb.set_thumbnail(url = member.avatar_url)
+    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     await ctx.send(embed = emb)
         
 @client.command()
@@ -350,6 +370,7 @@ async def remind(ctx, time: TimeConverter, *, arg):
     emb = discord.Embed(colour = ctx.author.color, timestamp = ctx.message.created_at)
     emb.add_field(name = 'Напомнил через', value = f'{time}s')
     emb.add_field(name = 'Напоминаю о', value = arg)
+    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     await ctx.send(f'{ctx.author.mention}', embed = emb)
 #Misc
 
@@ -366,7 +387,7 @@ async def aye_balbec(ctx):
 @commands.cooldown(1, 3, commands.BucketType.default)
 async def rp(ctx):
     await ctx.message.delete()
-    emb = discord.Embed(description = '[Ныа](https://www.youtube.com/watch?v=idmTSW9mfYI)', colour = discord.Color.red())
+    emb = discord.Embed(description = '[Ныа](https://www.youtube.com/watch?v=idmTSW9mfYI)', colour = discord.Color.green())
     await ctx.send(embed = emb)
         
 @client.command(aliases = ['.rap'])
@@ -403,10 +424,13 @@ async def cu(ctx):
 @commands.cooldown(3, 3, commands.BucketType.default)
 async def coinflip(ctx):
     await ctx.message.delete()
-    emb = discord.Embed(description = 'Орёл!', colour = discord.Color.red())
+    emb = discord.Embed(description = 'Орёл!', colour = discord.Color.green())
     emb.set_image(url = 'https://cdn.discordapp.com/attachments/524213591084105729/763835275930632252/-removebg-preview.png')
-    emb1 = discord.Embed(description = 'Решка!', colour = discord.Color.red())
+    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
+    emb1 = discord.Embed(description = 'Решка!', colour = discord.Color.green
+                         green())
     emb1.set_image(url = 'https://cdn.discordapp.com/attachments/524213591084105729/763837699240099890/-removebg-preview.png')
+    emb1.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     choices = [emb, emb1]
     rancoin = random.choice(choices)
     await ctx.send(embed = rancoin)
@@ -437,7 +461,7 @@ async def emb_content(ctx, arg):
 @client.command(aliases = ['emb_e'])
 @commands.has_permissions(mention_everyone = True)
 @commands.cooldown(1, 20, commands.BucketType.default)
-async def say_everyone(ctx, arg = None, text = None, t = None, d = None, fu = None, img = None, f = None, c = None, a : discord.Member = None):
+async def say_everyone(ctx, arg = None, text = None, t = None, d = None, img = None, f = None, c = None, a : discord.Member = None):
     await ctx.message.delete()
         if c == None:
             c = ctx.author.color
@@ -449,13 +473,11 @@ async def say_everyone(ctx, arg = None, text = None, t = None, d = None, fu = No
             img = ('')
         if f == None:
             f = ('')
-        if fu == None:
-            fu = ('')
         emb = discord.Embed(title = t, description = d, colour = c)
         emb.set_author(name = a, icon_url = a.avatar_url)
         emb.set_image(url = img)
         emb.set_thumbnail(url = f)
-        emb.set_footer(text = fu)
+        emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
         if arg == 'noembed':
             await ctx.send('@everyone ' + text)
         elif arg != 'noembed':
@@ -463,7 +485,7 @@ async def say_everyone(ctx, arg = None, text = None, t = None, d = None, fu = No
     
 @client.command(aliases = ['Say', 'SAY'])
 @commands.has_permissions(manage_channels = True)
-async def say(ctx, arg = None, text = None, t = None, d = None, fu = None, img = None, f = None, c = None, a : discord.Member = None, *, role: discord.Role = None):
+async def say(ctx, arg = None, text = None, t = None, d = None, img = None, f = None, c = None, a : discord.Member = None, *, role: discord.Role = None):
     await ctx.message.delete()
     if c == None:
         c = ctx.author.color
@@ -477,13 +499,11 @@ async def say(ctx, arg = None, text = None, t = None, d = None, fu = None, img =
         f = ('')
     if role != None:
         c = role.color
-    if fu == None:
-        fu = ('')
     emb = discord.Embed(title = t, description = d, colour = c)
     emb.set_author(name = a, icon_url = a.avatar_url)
     emb.set_image(url = img)
     emb.set_thumbnail(url = f)
-    emb.set_footer(text = fu)
+    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     if role is not None and arg != 'noembed':
         await ctx.send(f'{role.mention}', embed = emb)
     elif role is None and arg != 'noembed':
@@ -493,7 +513,7 @@ async def say(ctx, arg = None, text = None, t = None, d = None, fu = None, img =
 
 @client.command(aliases = ['emb_ed'])
 @commands.has_permissions(manage_channels = True)
-async def emb_edit(ctx, arg, t = None, d = None, fu = None, img = None, f = None, c = None, a : discord.Member = None):
+async def emb_edit(ctx, arg, t = None, d = None, img = None, f = None, c = None, a : discord.Member = None):
     await ctx.message.delete()
     message = await ctx.fetch_message(id = arg)
     if c == None:
@@ -506,13 +526,11 @@ async def emb_edit(ctx, arg, t = None, d = None, fu = None, img = None, f = None
         img = ('')
     if f == None:
         f = ('')
-    if fu == None:
-        fu = ('')
     emb = discord.Embed(title = t, description = d, colour = c)
     emb.set_author(name = a, icon_url = a.avatar_url)
     emb.set_image(url = img)
     emb.set_thumbnail(url = f)
-    emb.set_footer(text = fu)
+    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     await message.edit(embed = emb)
     await ctx.send('👌', delete_after = 1)
     
@@ -532,7 +550,8 @@ async def join(ctx):
     if ctx.author.voice and ctx.author.voice.channel:
         channel = ctx.author.voice.channel
     else:
-        emb = discord.Embed(description = 'Ты должен быть в канале, чтобы использовать это.', colour = discord.Color.red())
+        emb = discord.Embed(description = 'Ты должен быть в канале, чтобы использовать это.', colour = discord.Color.green())
+        emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
         await ctx.send(embed = emb)
         return
     vc = await channel.connect()
@@ -541,14 +560,14 @@ async def join(ctx):
 @commands.cooldown(1, 5, commands.BucketType.default)
 async def ping(ctx):
     await ctx.message.delete()
-    emb = discord.Embed(description = f'Pong! `{round(client.latency * 1000)} ms`', colour = discord.Color.red(), timestamp = ctx.message.created_at)
+    emb = discord.Embed(description = f'Pong! `{round(client.latency * 1000)} ms`', colour = discord.Color.green(), timestamp = ctx.message.created_at)
     await ctx.send(embed = emb)
 
 @client.command(aliases = ['Info', 'INFO'])
 @commands.cooldown(1, 5, commands.BucketType.default)
 async def info(ctx):
     await ctx.message.delete()
-    emb = discord.Embed(colour = discord.Color.red())
+    emb = discord.Embed(colour = discord.Color.green())
     emb.set_author(name = client.user.name, url = 'https://warframe.fandom.com/wiki/Cephalon_Cy', icon_url = client.user.avatar_url)
     emb.add_field(name = 'Версия', value = '0.12.7.9018')
     emb.add_field(name = 'Написан на', value = 'discord.py')
@@ -561,22 +580,17 @@ async def info(ctx):
 @commands.cooldown(1, 3, commands.BucketType.default)
 async def invite(ctx):
     await ctx.message.delete()
-    emb = discord.Embed(description = '[Ссылка](https://discord.com/oauth2/authorize?client_id=762015251264569352&scope=bot&permissions=8) для быстрого приглашения меня на сервера. Даже не пытайтесь вызвать эту команду, если вы не сасиска#2472. А, и ещё - даже если вы пригласите меня - вы не сможете выполнять команды.', colour = discord.Color.red())
+    emb = discord.Embed(description = '[Ссылка](https://discord.com/oauth2/authorize?client_id=762015251264569352&scope=bot&permissions=8) для быстрого приглашения бета версии на сервера.', colour = discord.Color.green())
     await ctx.send(embed = emb)
 #Cephalon
         
 #корень
-@client.command()
-async def forcehelp(ctx):
-    await ctx.message.delete()
-    await ctx.send_client_help()
-
 @client.command(aliases = ['Help', 'HELP'])
 @commands.cooldown(1, 3, commands.BucketType.default)
 async def help(ctx, arg = None):
     await ctx.message.delete()
     if arg == None:
-        emb = discord.Embed(title = "Меню команд Cephalon Cy", description = 'Существует дополнительная помощь по командам, пропишите cy|help |команда|', colour = discord.Color.red())
+        emb = discord.Embed(title = "Меню команд Cephalon Cy", description = 'Существует дополнительная помощь по командам, пропишите cy|help |команда|', colour = discord.Color.green())
         emb.add_field(name = 'cy|about', value = 'Показывает информацию о человеке.')
         emb.add_field(name = 'cy|avatar', value = 'Показывает аватар человека.')
         emb.add_field(name = 'cy|ban', value = 'Бан человека.')
@@ -598,7 +612,7 @@ async def help(ctx, arg = None):
         emb.add_field(name = 'cy|take', value = 'Забирает роль.', inline = False)
         emb.add_field(name = 'cy|unmute', value = 'Принудительный размут человека.')
         emb.add_field(name = 'Обозначение символов cy|help', value = '|| - опционально, <> - обязательно')
-        emb.set_footer(text = 'Cephalon Cy by сасиска#2472')
+        emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
         await ctx.send(embed = emb)
     elif arg == 'about':
         await ctx.send('```cy|about |@пинг/имя/ID|```')
@@ -613,13 +627,13 @@ async def help(ctx, arg = None):
     elif arg == 'edit':
         await ctx.send('```cy|edit <ID> <новый текст>```')
     elif arg == 'say':
-        await ctx.send('```cy|say |noembed| |text| |title текст| |description текст| |footer текст| |ссылка| |ссылка| |цвет| |@пинг/имя/ID| |@роль/имя роли/ID роли|(cy\\say "" "" "title" "description" "footer")```')
+        await ctx.send('```cy|say |noembed| |text| |title текст| |description текст| |footer текст| |ссылка| |ссылка| |цвет| |@пинг/имя/ID| |@роль/имя роли/ID роли|(cy\\say "" "" "title" "description")```')
     elif arg == 'emb_ctx':
         await ctx.send('```cy|emb_ctx <ID>```')
     elif arg == 'emb_edit':
-        await ctx.send('```cy|emb_edit <ID> |title текст| |description текст| |footer текст| |ссылка| |ссылка| |цвет| |@пинг/имя/ID| |@роль/имя роли/ID роли|```')
+        await ctx.send('```cy|emb_edit <ID> |title текст| |description текст| |ссылка| |ссылка| |цвет| |@пинг/имя/ID| |@роль/имя роли/ID роли|```')
     elif arg == 'say_everyone':
-        await ctx.send('```cy|say_everyone |title текст| |description текст| |footer текст| |ссылка| |ссылка| |цвет| |@пинг/имя/ID| |@роль/имя роли/ID роли|(cy\\say_everyone "" "" "title" "description" "footer")```')
+        await ctx.send('```cy|say_everyone |title текст| |description текст| |ссылка| |ссылка| |цвет| |@пинг/имя/ID| |@роль/имя роли/ID роли|(cy\\say_everyone "" "" "title" "description")```')
     elif arg == 'give':
         await ctx.send('```cy|give <@пинг/имя/ID> <@роль/имя роли/ID роли>```')
     elif arg == 'kick':
@@ -635,7 +649,7 @@ async def help(ctx, arg = None):
     elif arg == 'unmute':
         await ctx.send('```cy|unmute <@пинг/имя/ID> |причина|```')
     else:
-        emb = discord.Embed(description = 'Для этой команды не нужны аргументы', colour = discord.Color.red())
+        emb = discord.Embed(description = 'Для этой команды не нужны аргументы', colour = discord.Color.green())
         emb.set_footer(text = 'Хотя, возможно, вы ввели команду неправильно?')
         await ctx.send(embed = emb)
 
@@ -647,7 +661,7 @@ async def on_ready():
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         await ctx.message.delete()
-        emb = discord.Embed(description = f'{ctx.author.mention}, я не знаю такую команду!', colour = discord.Color.red())
+        emb = discord.Embed(description = f'{ctx.author.mention}, я не знаю такую команду!', colour = discord.Color.green())
         emb.set_footer(text = 'Считаете, что такая команда должна быть? Напишите сасиска#2472 и опишите её суть!')
         await ctx.send(embed = emb)
 
@@ -655,7 +669,7 @@ async def on_command_error(ctx, error):
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
         await ctx.message.delete()
-        emb = discord.Embed(description = f'{ctx.author.mention}, команда в кд, потерпи чутка!', colour = discord.Color.red())
+        emb = discord.Embed(description = f'{ctx.author.mention}, команда в кд, потерпи чутка!', colour = discord.Color.green())
         await ctx.send(embed = emb)
 #корень
          
