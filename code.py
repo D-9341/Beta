@@ -427,8 +427,7 @@ async def coinflip(ctx):
     emb = discord.Embed(description = 'Орёл!', colour = discord.Color.green())
     emb.set_image(url = 'https://cdn.discordapp.com/attachments/524213591084105729/763835275930632252/-removebg-preview.png')
     emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
-    emb1 = discord.Embed(description = 'Решка!', colour = discord.Color.green
-                         green())
+    emb1 = discord.Embed(description = 'Решка!', colour = discord.Color.green())
     emb1.set_image(url = 'https://cdn.discordapp.com/attachments/524213591084105729/763837699240099890/-removebg-preview.png')
     emb1.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     choices = [emb, emb1]
