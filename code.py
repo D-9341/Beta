@@ -280,7 +280,6 @@ async def guild(ctx, guild: discord.Guild = None):
     await ctx.message.delete()
     if guild == None:
         guild = ctx.guild
-    await ctx.message.delete()
     emb = discord.Embed(title = f'Информация о {guild}', colour = discord.Color.green(), timestamp = ctx.message.created_at)
     emb.add_field(name = 'ID сервера', value = guild.id)
     emb.add_field(name = 'Уровень сервера', value = guild.premium_tier)
