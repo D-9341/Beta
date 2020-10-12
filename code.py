@@ -282,13 +282,6 @@ async def guild(ctx, guild: discord.Guild = None):
         guild = ctx.guild
     emb = discord.Embed(title = f'Информация о {guild}', colour = discord.Color.green(), timestamp = ctx.message.created_at)
     emb.add_field(name = 'ID сервера', value = guild.id)
-    emb.add_field(name = 'Уровень сервера', value = guild.premium_tier)
-    emb.add_field(name = 'Люди, бустящие сервер', value = guild.premium_subscribers)
-    emb.add_field(name = 'Владелец сервера', value = guild.owner.mention, inline = False)
-    emb.add_field(name = 'Количество человек на сервере', value = guild.member_count)
-    emb.add_field(name = 'Дата создания сервера', value = guild.created_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"), inline = False)
-    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
-    emb.set_thumbnail(url = guild.icon_url)
     await ctx.send(embed = emb)
 
 @client.command()
@@ -395,7 +388,7 @@ async def rap(ctx):
     await ctx.message.delete()
     emb = discord.Embed(colour = ctx.author.color)
     emb.set_author(name = ctx.author, icon_url = ctx.author.icon_url)
-    emb.set_image(url = 'https://thumbs.gfycat.com/MessyCarefreeHousefly-size_restricted.gif')
+    emb.set_footer(url = 'https://thumbs.gfycat.com/MessyCarefreeHousefly-size_restricted.gif')
     await ctx.send(embed = emb)
         
 @client.command()
