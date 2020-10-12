@@ -284,7 +284,7 @@ async def guild(ctx, guild: discord.Guild = None):
     emb.add_field(name = 'ID сервера', value = guild.id)
     emb.add_field(name = 'Уровень сервера', value = guild.premium_tier)
     emb.add_field(name = 'Люди, бустящие сервер', value = guild.premium_subscribers)
-    emb.add_field(name = 'Количество человек на сервере', value = guild.member_count)
+    emb.add_field(name = 'Человек', value = guild.member_count)
     if len(guild.roles) >= 15:
         emb.add_field(name = f'Роли', value = 'Слишком много', inline = False)
     else:
