@@ -38,7 +38,7 @@ async def guild(ctx, guild: discord.Guild = None):
     emb.add_field(name = 'ID сервера', value = guild.id)
     emb.add_field(name = 'Уровень сервера', value = guild.premium_tier)
     emb.add_field(name = 'Люди, бустящие сервер', value = guild.premium_subscribers)
-    emb.add_field(name = 'Владелец сервера', value = guild.owner.mention, inline = False)
+    emb.add_field(name = 'Владелец сервера', value = guild.owner, inline = False)
     emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     emb.set_thumbnail(url = guild.icon_url)
     await ctx.send(embed = emb)
