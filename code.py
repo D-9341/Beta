@@ -282,6 +282,9 @@ async def guild(ctx, guild: discord.Guild = None):
         guild = ctx.guild
     emb = discord.Embed(title = f'Информация о {guild}', colour = discord.Color.green(), timestamp = ctx.message.created_at)
     emb.add_field(name = 'ID сервера', value = guild.id)
+    emb.add_field(name = 'Уровень сервера', value = guild.premium_tier)
+    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
+    emb.set_thumbnail(url = guild.icon_url)
     await ctx.send(embed = emb)
 
 @client.command()
