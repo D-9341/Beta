@@ -38,7 +38,6 @@ async def guild(ctx, guild: discord.Guild = None):
     emb.add_field(name = 'ID сервера', value = guild.id)
     emb.add_field(name = 'Уровень сервера', value = guild.premium_tier)
     emb.add_field(name = 'Люди, бустящие сервер', value = guild.premium_subscribers)
-    emb.add_field(name = 'Владелец сервера', value = guild.owner.name, inline = False)
     emb.add_field(name = 'Количество человек на сервере', value = guild.member_count)
     emb.add_field(name = 'Дата создания сервера', value = guild.created_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"), inline = False)
     emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
