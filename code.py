@@ -28,22 +28,7 @@ class TimeConverter(commands.Converter):
                 raise commands.BadArgument(f'{key} не число!')
         return time
 #test space
-@client.command(aliases = ['Guild', 'GUILD'])
-@commands.cooldown(1, 5, commands.BucketType.default)
-async def guild(ctx, guild: discord.Guild = None):
-    await ctx.message.delete()
-    if guild == None:
-        guild = ctx.guild
-    emb = discord.Embed(title = f'Информация о {guild}', colour = discord.Color.green(), timestamp = ctx.message.created_at)
-    emb.add_field(name = 'ID сервера', value = guild.id)
-    emb.add_field(name = 'Уровень сервера', value = guild.premium_tier)
-    emb.add_field(name = 'Люди, бустящие сервер', value = guild.premium_subscribers)
-    emb.add_field(name = 'Количество человек на сервере', value = guild.member_count)
-    emb.add_field(name = f'Роли [{len(guild.roles)-1}]', value = ' '.join([role.mention for role in guild.roles[1:]]), inline = False)
-    emb.add_field(name = 'Дата создания сервера', value = guild.created_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"), inline = False)
-    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
-    emb.set_thumbnail(url = guild.icon_url)
-    await ctx.send(embed = emb)
+
 #test space
 
 #Mod
@@ -289,7 +274,25 @@ async def clear(ctx, amount: int, confirm: str = None):
 #Mod
 
 #Misc
-
+@client.command(aliases = ['Guild', 'GUILD'])
+@commands.cooldown(1, 5, commands.BucketType.default)
+async def guild(ctx, guild: discord.Guild = None):
+    await ctx.message.delete()
+    if guild == None:
+        guild = ctx.guild
+    emb = discord.Embed(title = f'Информация о {guild}', colour = discord.Color.green(), timestamp = ctx.message.created_at)
+    emb.add_field(name = 'ID сервера', value = guild.id)
+    emb.add_field(name = 'Уровень сервера', value = guild.premium_tier)
+    emb.add_field(name = 'Люди, бустящие сервер', value = guild.premium_subscribers)
+    emb.add_field(name = 'Количество человек на сервере', value = guild.member_count)
+    if len(guild.roles) >= 15:
+        emb.add_field(name = f'Роли', value = 'Слишком много', inline = False)
+    else:
+        emb.add_field(name = f'Роли [{len(guild.roles)-1}]', value = ' '.join([role.mention for role in guild.roles[1:]]), inline = False)
+    emb.add_field(name = 'Дата создания сервера', value = guild.created_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"), inline = False)
+    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
+    emb.set_thumbnail(url = guild.icon_url)
+    await ctx.send(embed = emb)
 
 @client.command()
 @commands.cooldown(1, 5, commands.BucketType.default)
