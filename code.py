@@ -36,7 +36,7 @@ async def check(ctx):
     guild = ctx.guild
     if guild.region == 'russia':
         await ctx.send('Это сообщение меняется в зависимости от вашего региона')
-    elif guild.region == 'us_central' or 'us_east' or 'us_south' or 'us_west':
+    else:
         await ctx.send('This message changes depending on your region')
 #test space
 
