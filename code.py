@@ -31,8 +31,8 @@ class TimeConverter(commands.Converter):
         return time
 #test space
 @client.command()
-async def setlog(ctx, channel):
-    mongo_url = 'mongodb+srv://cy:QCYBER33@cluster0.n4lmb.mongodb.net/test?retryWrites=true&w=majority'
+async def setlog(ctx):
+    mongo_url = 'mongodb+srv://cy:QCYBER33@cluster0.n4lmb.mongodb.net/channels?retryWrites=true&w=majority'
     await ctx.message.delete()
     await ctx.send('Залогинено')
     cluster = MongoClient(mongo_url)
@@ -41,11 +41,12 @@ async def setlog(ctx, channel):
     await ctx.send('Нашёл кластер')
     collection = db['log_channel']
     await ctx.send('Нашёл коллекцию')
-    ch = {'channel_id': channel}
+    ch = {'channel_id': 736101935630909511}
     await ctx.send('Принял ID')
     collection.insert_one(ch)
     await ctx.send('ID канала успешно записано.')
-    await ch.send('чмо')
+    channel = collection.find_one(ch)
+    await channel.send('чмо')
 #test space
 
 #Mod
