@@ -32,7 +32,8 @@ class TimeConverter(commands.Converter):
 #test space
 @client.command()
 async def setlog(ctx, channel):
-    mongo_url = 'mongodb+srv://cy:QCYBER33@cluster0.n4lmb.mongodb.net/channels?retryWrites=true&w=majority'
+    mongo_url = 'mongodb+srv://cy:QCYBER33@cluster0.n4lmb.mongodb.net/test?retryWrites=true&w=majority'
+    await ctx.message.delete()
     cluster = MongoClient(mongo_url)
     db = cluster['channels']
     collection = db['log_channel']
