@@ -351,7 +351,7 @@ async def about(ctx, member: discord.Member = None):
     emb.add_field(name = 'Имя', value = member.name)
     emb.add_field(name = 'Никнейм', value = member.nick)
     if member.activity == None:
-        ac = 'Не Доступно.'
+        ac = 'Н/Д'
     else:
         ac = f'{member.activity.type} {member.activity.name}'
     emb.add_field(name = 'Активность', value = ac)
