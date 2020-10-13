@@ -1,3 +1,5 @@
+import pymongo
+from pymongo import MongoClient
 import asyncio
 import random
 import datetime
@@ -28,7 +30,16 @@ class TimeConverter(commands.Converter):
                 raise commands.BadArgument(f'{key} не число!')
         return time
 #test space
-
+@client.command()
+async def setlog(ctx, channel):
+    mongo_url = 'mongodb+srv://cy:QCYBER33@cluster0.n4lmb.mongodb.net/channels?retryWrites=true&w=majority'
+    cluster = MongoClient(mongo_url)
+    db = cluster['channels']
+    collection = db['log_channel']
+    ch = {'channel_id': channel}
+    collection.insert_one(ch)
+    await ctx.send('ID канала успешно записано.')
+    await ch.send('чмо')
 #test space
 
 #Mod
