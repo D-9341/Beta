@@ -276,17 +276,15 @@ async def clear(ctx, amount: int, confirm: str = None):
 #Misc
 @client.command(aliases = ['Guild', 'GUILD'])
 @commands.cooldown(1, 5, commands.BucketType.default)
-async def guild(ctx, guild: discord.Guild = None):
+async def guild(ctx):
     await ctx.message.delete()
-    if guild == None:
-        guild = ctx.guild
+    guild = ctx.guild
     emb = discord.Embed(title = f'Информация о {guild}', colour = discord.Color.green(), timestamp = ctx.message.created_at)
     emb.add_field(name = 'ID сервера', value = guild.id)
-    emb.add_field(name = 'Уровень сервера', value = guild.premium_tier)
-    emb.add_field(name = 'Люди, бустящие сервер', value = guild.premium_subscribers)
     emb.add_field(name = 'Человек', value = guild.member_count)
+    emb.add_field(name = 'Каналов', value = f'Текстовых {len(guild.text_channels)}| Голосовых {len(guild.voice_channels)}')
     if len(guild.roles) >= 15:
-        emb.add_field(name = 'Роли', value = f'Слишком много ({len(guild.roles)-1})', inline = False)
+        emb.add_field(name = 'Роли', value = f'Слишком много для отрисовки ({len(guild.roles)-1})', inline = False)
     else:
         emb.add_field(name = f'Роли [{len(guild.roles)-1}]', value = ' '.join([role.mention for role in guild.roles[1:]]), inline = False)
     emb.add_field(name = 'Дата создания сервера', value = guild.created_at.strftime('%d/%m/%Y %H:%M:%S UTC'), inline = False)
@@ -327,7 +325,7 @@ async def avatar(ctx, user: discord.Member = None):
     await ctx.message.delete()
     if user == None:
         user = ctx.author
-    emb = discord.Embed(description = f'[Прямая ссылка]({user.avatar_url})', colour = user.color)
+    emb = discord.Embed(description = f'[Прямая ссылка]({user.avatar_url_as()})', colour = user.color)
     emb.set_author(name = user)
     emb.set_image(url = user.avatar_url)
     emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
@@ -352,6 +350,7 @@ async def about(ctx, member: discord.Member = None):
     emb.add_field(name = 'Упоминание', value = member.mention)
     emb.add_field(name = 'Имя', value = member.name)
     emb.add_field(name = 'Никнейм', value = member.nick)
+    emb.add_field(name = 'Активность', value = f'{str(target.activity.type).split('.')[-1].title() if target.activity else 'Н/Д'} {target.activity.name if target.activity else ''}')
     emb.add_field(name = 'Статус', value = member.status)
     emb.add_field(name = f'Роли [{len(member.roles)-1}]', value=' '.join([role.mention for role in member.roles[1:]]), inline = False)
     emb.add_field(name = 'Высшая Роль', value = member.top_role.mention, inline = False)
