@@ -1,5 +1,6 @@
 discord.py[voice]
 discord.py
+pymongo
 aiohttp
 websockets
 chardet
