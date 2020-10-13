@@ -36,9 +36,13 @@ async def setlog(ctx, channel):
     await ctx.message.delete()
     await ctx.send('Залогинено')
     cluster = MongoClient(mongo_url)
+    await ctx.send('Нашёл ссылку')
     db = cluster['channels']
+    await ctx.send('Нашёл кластер')
     collection = db['log_channel']
+    await ctx.send('Нашёл коллекцию')
     ch = {'channel_id': channel}
+    await ctx.send('Принял ID')
     collection.insert_one(ch)
     await ctx.send('ID канала успешно записано.')
     await ch.send('чмо')
