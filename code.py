@@ -555,10 +555,11 @@ async def emb_edit(ctx, arg, t = None, d = None, img = None, f = None, c = None,
 async def edit(ctx, arg, *, text):
     await ctx.message.delete()
     message = await ctx.fetch_message(id = arg)
-    if text == '--clean':
-        text = None
-    await message.edit(content = text)
-    await ctx.send('👌', delete_after = 1)
+    if text == '--delete':
+        await message.delete()
+    else:
+        await message.edit(content = text)
+        await ctx.send('👌', delete_after = 1)
 #Embeds
 
 #Cephalon
@@ -645,13 +646,13 @@ async def help(ctx, arg = None):
     elif arg == 'edit':
         await ctx.send('```cy|edit <ID> <новый текст>```')
     elif arg == 'say':
-        await ctx.send('```cy|say |noembed| |text| |title текст| |description текст| |ссылка| |ссылка| |цвет| |@пинг| |@роль|(cy|say "" "" "title" "description")```')
+        await ctx.send('```cy|say |noembed| |text| |title текст| |description текст| |ссылка| |ссылка| |цвет| |@пинг/имя/ID| |@роль/название/ID|(cy|say "" "" "title" "description")```')
     elif arg == 'emb_ctx':
         await ctx.send('```cy|emb_ctx <ID>```')
     elif arg == 'emb_edit':
-        await ctx.send('```cy|emb_edit <ID> |title текст| |description текст| |ссылка| |ссылка| |цвет| |@пинг| |@роль|```')
+        await ctx.send('```cy|emb_edit <ID> |title текст| |description текст| |ссылка| |ссылка| |цвет| |@пинг|```')
     elif arg == 'say_everyone':
-        await ctx.send('```cy|say_everyone |title текст| |description текст| |ссылка| |ссылка| |цвет| |@пинг| |@роль|(cy|say_everyone "" "" "title" "description")```')
+        await ctx.send('```cy|say_everyone |title текст| |description текст| |ссылка| |ссылка| |цвет| |@пинг/имя/ID| |@роль/название/ID|(cy|say_everyone "" "" "title" "description")```')
     elif arg == 'give':
         await ctx.send('```cy|give <@пинг> <@роль>```')
     elif arg == 'kick':
