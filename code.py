@@ -351,20 +351,13 @@ async def avatar(ctx, user: discord.Member = None):
     av = 'png'
     av1 = 'webp'
     av2 = 'jpg'
-    if user.is_avatar_animated == False:
-        emb = discord.Embed(description = f'[Прямая ссылка (.png)]({user.avatar_url_as(format = av)})', colour = user.color)
-        emb.add_field(name = '.webp', value = f'[Ссылка]({user.avatar_url_as(format = av1)})')
-        emb.add_field(name = '.jpg', value = f'[Ссылка]({user.avatar_url_as(format = av2)})')
-        emb.set_author(name = user)
-        emb.set_image(url = user.avatar_url_as(format = av))
-        emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
-        await ctx.send(embed = emb)
-    else:
-        emb = discord.Embed(description = f'[Прямая ссылка]({user.avatar_url})', colour = user.color)
-        emb.set_author(name = user)
-        emb.set_image(url = user.avatar_url)
-        emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
-        await ctx.send(embed = emb)
+    emb = discord.Embed(description = f'[Прямая ссылка (.png)]({user.avatar_url_as(format = av)})', colour = user.color)
+    emb.add_field(name = '.webp', value = f'[Ссылка]({user.avatar_url_as(format = av1)})')
+    emb.add_field(name = '.jpg', value = f'[Ссылка]({user.avatar_url_as(format = av2)})')
+    emb.set_author(name = user)
+    emb.set_image(url = user.avatar_url_as(format = av))
+    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
+    await ctx.send(embed = emb)
     
 @client.command(aliases = ['me', 'Me', 'ME', 'About', 'ABOUT'])
 @commands.cooldown(1, 5, commands.BucketType.default)
