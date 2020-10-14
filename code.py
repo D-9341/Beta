@@ -320,7 +320,7 @@ async def role(ctx, *, role: discord.Role):
     emb.add_field(name = 'Упоминается?', value = role.mentionable)
     emb.add_field(name = 'Управляется интеграцией?', value = role.managed)
     emb.add_field(name = 'Позиция в списке', value = role.position)
-    emb.add_field(name = 'Обладатели роли', value = ', 'join([member.mention for member in role.members]), inline = False)
+    emb.add_field(name = 'Обладатели роли', value = ', '.join([member.mention for member in role.members]), inline = False)
     emb.add_field(name = 'Создана', value = role.created_at.strftime('%d/%m/%Y %H:%M:%S UTC'), inline = False)
     emb.add_field(name = 'Показывает участников отдельно?', value = role.hoist)
     emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
