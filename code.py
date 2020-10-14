@@ -34,6 +34,7 @@ class TimeConverter(commands.Converter):
 async def on_member_update(before, after):
     if before.roles != after.roles:
         channel = client.get_channel(714175791033876490)
+        await channel.send('адамант чмо')
         if after.top_role > before.top_role:
             emb = discord.Embed(title = 'ВНИМАНИЕ', description = 'БЫЛА ОБНАРУЖЕНА ПОПЫТКА ВЫДАЧИ РОЛИ ВЫШЕ ТОЙ, ЧТО БЫЛА У ЧЕЛОВЕКА.')
             await channel.send(f'<@!338714886001524737>', embed = emb)
