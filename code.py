@@ -30,7 +30,14 @@ class TimeConverter(commands.Converter):
                 raise commands.BadArgument(f'{key} не число!')
         return time
 #test space
-
+@client.event
+async def on_member_update(before, after):
+    if before.roles != after.roles:
+        channel = client.get_channel(714175791033876490)
+        if after.member.top_role > before.member.top_role:
+            emb = discord.Embed(title = 'ВНИМАНИЕ', description = 'БЫЛА ПЕРЕХВАЧЕНА ПОПЫТКА ВЫДАЧИ РОЛИ ВЫШЕ ТОЙ, ЧТО БЫЛА У ЧЕЛОВЕКА.')
+            await channel.send(f'<@!338714886001524737>', embed = emb)
+            await before.member.remove_roles(after.role)
 #test space
 
 #Mod
