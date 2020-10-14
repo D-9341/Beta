@@ -320,7 +320,11 @@ async def role(ctx, *, role: discord.Role):
     emb.add_field(name = 'Упоминается?', value = role.mentionable)
     emb.add_field(name = 'Управляется интеграцией?', value = role.managed)
     emb.add_field(name = 'Позиция в списке', value = role.position)
-    emb.add_field(name = 'Создана', value = role.created_at.strftime('%d/%m/%Y %H:%M:%S UTC'), inline = False)
+    now = datetime.datetime.today()
+    then = role.created_at
+    delta = now - then
+    d = role.created_at.strftime('%d/%m/%Y %H:%M:%S UTC')
+    emb.add_field(name = 'Создана', value = f'{delta.days} дня(ей) назад. ({d})', inline = False)
     emb.add_field(name = 'Показывает участников отдельно?', value = role.hoist)
     emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     await ctx.send(embed = emb)
@@ -345,24 +349,25 @@ async def about(ctx, member: discord.Member = None):
     if member == None:
         member = ctx.author
     if member.nick == None:
-        member.nick = 'Не указан'
+        member.nick = 'Н/Д'
     if member.bot == False:
         bot = 'Неа'
     elif member.bot == True:
         bot = 'Ага'
     emb = discord.Embed(title = f'Информация о {member}', colour = member.color, timestamp = ctx.message.created_at)
     emb.add_field(name = 'ID', value = member.id)
-    emb.add_field(name = 'Создан', value = member.created_at.strftime('%d/%m/%Y %H:%M:%S UTC'), inline = False)
-    emb.add_field(name = 'Вошёл', value = member.joined_at.strftime('%d/%m/%Y %H:%M:%S UTC'), inline = False)
+    now = datetime.datetime.today()
+    then = member.created_at
+    delta = now - then
+    d = member.created_at.strftime('%d/%m/%Y %H:%M:%S UTC')
+    then1 = member.joined_at
+    delta1 = now - then1
+    d1 = member.joined_at.strftime('%d/%m/%Y %H:%M:%S UTC')
+    emb.add_field(name = 'Создан', value = f'{delta.days} дня(ей) назад. ({d})', inline = False)
+    emb.add_field(name = 'Вошёл', value = f'{delta1.days} дня(ей) назад. ({d1})', inline = False)
     emb.add_field(name = 'Упоминание', value = member.mention)
-    emb.add_field(name = 'Имя', value = member.name)
+    emb.add_field(name = 'Raw имя', value = member.name)
     emb.add_field(name = 'Никнейм', value = member.nick)
-    if member.activity == None:
-        ac = 'Н/Д'
-    else:
-        ac = f'{member.activity.type} {member.activity.name}'
-    emb.add_field(name = 'Активность', value = ac)
-    emb.add_field(name = 'Статус', value = member.status)
     emb.add_field(name = f'Роли [{len(member.roles)-1}]', value = ', '.join([role.mention for role in member.roles[1:]]), inline = False)
     emb.add_field(name = 'Высшая Роль', value = member.top_role.mention, inline = False)
     emb.add_field(name = 'Бот?', value = bot)
