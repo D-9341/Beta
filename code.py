@@ -356,7 +356,7 @@ async def avatar(ctx, member: discord.Member = None):
     emb.add_field(name = '.webp', value = f'[Ссылка]({member.avatar_url_as(format = av1)})')
     emb.add_field(name = '.jpg', value = f'[Ссылка]({member.avatar_url_as(format = av2)})')
     emb.set_image(url = member.avatar_url)
-    emb.set_author(name = user)
+    emb.set_author(name = member)
     emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     await ctx.send(embed = emb)
     
