@@ -344,22 +344,22 @@ async def role(ctx, *, role: discord.Role):
     
 @client.command(aliases = ['Avatar', 'AVATAR'])
 @commands.cooldown(1, 5, commands.BucketType.default)
-async def avatar(ctx, user: discord.Member = None):
+async def avatar(ctx, member: discord.Member = None):
     await ctx.message.delete()
-    if user == None:
-        user = ctx.author
+    if member == None:
+        member = ctx.author
     av = 'png'
     av1 = 'webp'
     av2 = 'jpg'
     av3 = 'gif'
     emb = discord.Embed(colour = user.color)
-    emb.add_field(name = '.png', value = f'[Прямая ссылка (.png)]({user.avatar_url_as(format = av)})')
-    emb.add_field(name = '.webp', value = f'[Ссылка]({user.avatar_url_as(format = av1)})')
-    emb.add_field(name = '.jpg', value = f'[Ссылка]({user.avatar_url_as(format = av2)})')
-    if user.is_avatar_animated == True:
-        emb.add_field(name = '.gif', value = f'[Ссылка]({user.avatar_url_as(format = av3)})')
+    emb.add_field(name = '.png', value = f'[Ссылка]({member.avatar_url_as(format = av)})')
+    emb.add_field(name = '.webp', value = f'[Ссылка]({member.avatar_url_as(format = av1)})')
+    emb.add_field(name = '.jpg', value = f'[Ссылка]({member.avatar_url_as(format = av2)})')
+    if member.is_avatar_animated == True:
+        emb.add_field(name = '.gif', value = f'[Ссылка]({member.avatar_url_as(format = av3)})')
     emb.set_author(name = user)
-    emb.set_image(url = user.avatar_url_as(format = av))
+    emb.set_image(url = user.avatar_url_as(format = av3))
     emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     await ctx.send(embed = emb)
     
