@@ -413,7 +413,7 @@ async def rap(ctx):
     await ctx.message.delete()
     emb = discord.Embed(colour = ctx.author.color)
     emb.set_author(name = ctx.author, icon_url = ctx.author.icon_url)
-    emb.set_footer(url = 'https://thumbs.gfycat.com/MessyCarefreeHousefly-size_restricted.gif')
+    emb.set_image(url = 'https://thumbs.gfycat.com/MessyCarefreeHousefly-size_restricted.gif')
     await ctx.send(embed = emb)
         
 @client.command()
@@ -555,6 +555,8 @@ async def emb_edit(ctx, arg, t = None, d = None, img = None, f = None, c = None,
 async def edit(ctx, arg, *, text):
     await ctx.message.delete()
     message = await ctx.fetch_message(id = arg)
+    if text == '--clean':
+        text = None
     await message.edit(content = text)
     await ctx.send('👌', delete_after = 1)
 #Embeds
@@ -596,7 +598,7 @@ async def info(ctx):
 @commands.cooldown(1, 3, commands.BucketType.default)
 async def invite(ctx):
     await ctx.message.delete()
-    emb = discord.Embed(description = '[Ссылка](https://discord.com/oauth2/authorize?client_id=762015251264569352&scope=bot&permissions=8) для быстрого приглашения бета версии на сервера.', colour = discord.Color.green())
+    emb = discord.Embed(description = '[Ссылка](https://discord.com/oauth2/authorize?client_id=764882153812787250&scope=bot&permissions=8) для быстрого приглашения бета версии на сервера.', colour = discord.Color.green())
     await ctx.send(embed = emb)
 #Cephalon
         
@@ -643,13 +645,13 @@ async def help(ctx, arg = None):
     elif arg == 'edit':
         await ctx.send('```cy|edit <ID> <новый текст>```')
     elif arg == 'say':
-        await ctx.send('```cy|say |noembed| |text| |title текст| |description текст| |footer текст| |ссылка| |ссылка| |цвет| |@пинг/имя/ID| |@роль/имя роли/ID роли|(cy\\say "" "" "title" "description")```')
+        await ctx.send('```cy|say |noembed| |text| |title текст| |description текст| |ссылка| |ссылка| |цвет| |@пинг| |@роль|(cy|say "" "" "title" "description")```')
     elif arg == 'emb_ctx':
         await ctx.send('```cy|emb_ctx <ID>```')
     elif arg == 'emb_edit':
         await ctx.send('```cy|emb_edit <ID> |title текст| |description текст| |ссылка| |ссылка| |цвет| |@пинг| |@роль|```')
     elif arg == 'say_everyone':
-        await ctx.send('```cy|say_everyone |title текст| |description текст| |ссылка| |ссылка| |цвет| |@пинг| |@роль|(cy\\say_everyone "" "" "title" "description")```')
+        await ctx.send('```cy|say_everyone |title текст| |description текст| |ссылка| |ссылка| |цвет| |@пинг| |@роль|(cy|say_everyone "" "" "title" "description")```')
     elif arg == 'give':
         await ctx.send('```cy|give <@пинг> <@роль>```')
     elif arg == 'kick':
