@@ -293,7 +293,7 @@ async def guild(ctx):
     then = guild.created_at
     delta = now - then
     d = guild.created_at.strftime('%d/%m/%Y %H:%M:%S UTC')
-    emb.add_field(name = 'Дата создания сервера', value = f'{delta.days} дней, {delts.seconds} секунд назад. ({d})', inline = False)
+    emb.add_field(name = 'Дата создания сервера', value = f'{delta.days} дня назад. ({d})', inline = False)
     emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     emb.set_thumbnail(url = guild.icon_url)
     await ctx.send(embed = emb)
