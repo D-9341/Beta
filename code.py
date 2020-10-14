@@ -359,7 +359,10 @@ async def avatar(ctx, member: discord.Member = None):
     if member.is_avatar_animated == True:
         emb.add_field(name = '.gif', value = f'[Ссылка]({member.avatar_url_as(format = av3)})')
     emb.set_author(name = user)
-    emb.set_image(url = user.avatar_url_as(format = av3))
+    if member.is_avatar_animated == False:
+        emb.set_image(url = user.avatar_url_as(format = av))
+    else:
+        emb.set_image(url = user.avatar_url_as(format = av3))
     emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     await ctx.send(embed = emb)
     
