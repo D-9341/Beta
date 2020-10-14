@@ -34,7 +34,7 @@ class TimeConverter(commands.Converter):
 async def check(ctx):
     await ctx.message.delete()
     guild = ctx.guild
-    if guild.region.russia:
+    if guild.region is russia:
         await ctx.send('Это сообщение меняется в зависимости от вашего региона')
     else:
         await ctx.send('This message changes depending on your region')
@@ -290,13 +290,16 @@ async def guild(ctx):
     guild = ctx.guild
     emb = discord.Embed(title = f'Информация о {guild}', colour = discord.Color.green(), timestamp = ctx.message.created_at)
     emb.add_field(name = 'ID сервера', value = guild.id)
-    emb.add_field(name = 'Человек', value = guild.member_count)
+    emb.add_field(name = 'Участников', value = guild.member_count)
     emb.add_field(name = 'Каналов', value = f'Текстовых {len(guild.text_channels)} | Голосовых {len(guild.voice_channels)}')
     if len(guild.roles) >= 15:
         emb.add_field(name = 'Роли', value = f'Слишком много для отрисовки ({len(guild.roles)-1})', inline = False)
     else:
         emb.add_field(name = f'Роли [{len(guild.roles)-1}]', value = ' '.join([role.mention for role in guild.roles[1:]]), inline = False)
-    emb.add_field(name = 'Дата создания сервера', value = guild.created_at.strftime('%d/%m/%Y %H:%M:%S UTC'), inline = False)
+    a = datetime.datetime.today().strftime('%d/%m/%Y %H:%M:%S')
+    b = guild.created_at.strftime('%d/%m/%Y %H:%M:%S UTC')
+    c = a - b
+    emb.add_field(name = 'Дата создания сервера', value = f'{c}', inline = False)
     emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     emb.set_thumbnail(url = guild.icon_url)
     await ctx.send(embed = emb)
