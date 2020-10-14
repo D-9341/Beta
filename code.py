@@ -320,7 +320,6 @@ async def role(ctx, *, role: discord.Role):
     emb.add_field(name = 'Упоминается?', value = role.mentionable)
     emb.add_field(name = 'Управляется интеграцией?', value = role.managed)
     emb.add_field(name = 'Позиция в списке', value = role.position)
-    emb.add_field(name = 'Обладателей роли', value = len(role.members), inline = False)
     emb.add_field(name = 'Создана', value = role.created_at.strftime('%d/%m/%Y %H:%M:%S UTC'), inline = False)
     emb.add_field(name = 'Показывает участников отдельно?', value = role.hoist)
     emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
@@ -332,9 +331,10 @@ async def avatar(ctx, user: discord.Member = None):
     await ctx.message.delete()
     if user == None:
         user = ctx.author
-    emb = discord.Embed(description = f'[Прямая ссылка]({user.avatar_url_as()})', colour = user.color)
+    av = 'png'
+    emb = discord.Embed(description = f'[Прямая ссылка]({user.avatar_url_as(format = av)})', colour = user.color)
     emb.set_author(name = user)
-    emb.set_image(url = user.avatar_url)
+    emb.set_image(url = user.avatar_url_as(format = av))
     emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     await ctx.send(embed = emb)
     
