@@ -32,7 +32,7 @@ class TimeConverter(commands.Converter):
 #test space
 @client.event
 async def on_member_update(before, after):
-    if before.roles != after.roles:
+    if before.member.roles != after.member.roles:
         channel = client.get_channel(714175791033876490)
         if after.member.top_role > before.member.top_role:
             emb = discord.Embed(title = 'ВНИМАНИЕ', description = 'БЫЛА ПЕРЕХВАЧЕНА ПОПЫТКА ВЫДАЧИ РОЛИ ВЫШЕ ТОЙ, ЧТО БЫЛА У ЧЕЛОВЕКА.')
