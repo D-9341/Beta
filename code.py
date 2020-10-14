@@ -351,7 +351,7 @@ async def avatar(ctx, member: discord.Member = None):
     av = 'png'
     av1 = 'webp'
     av2 = 'jpg'
-    emb = discord.Embed(colour = user.color)
+    emb = discord.Embed(colour = member.color)
     emb.add_field(name = '.png', value = f'[Ссылка]({member.avatar_url_as(format = av)})')
     emb.add_field(name = '.webp', value = f'[Ссылка]({member.avatar_url_as(format = av1)})')
     emb.add_field(name = '.jpg', value = f'[Ссылка]({member.avatar_url_as(format = av2)})')
