@@ -33,16 +33,11 @@ class TimeConverter(commands.Converter):
 @client.event
 async def on_member_update(before, after):
     if before.roles != after.roles:
-        if before.bot:
-            return
         channel = client.get_channel(714175791033876490)
         await channel.send('адамант чмо')
         if after.top_role > before.top_role:
-            async for event in before.guild.audit_logs(limit=1, action=discord.AuditLogAction.member_role_update):
-                if getattr(event.target, "id", None) != before.id:
-                    continue
             emb = discord.Embed(title = 'ВНИМАНИЕ', description = 'БЫЛА ОБНАРУЖЕНА ПОПЫТКА ВЫДАЧИ РОЛИ ВЫШЕ ТОЙ, ЧТО БЫЛА У ЧЕЛОВЕКА.', colour = discord.Color.red())
-            emb.add_field(name = 'Выдал роль', value = event.user)
+            emb.add_field(name = 'Выдал роль', value = 'а я ебу? в логе аудита посмотри, оттуда ничего нельзя удалить')
             await channel.send(f'<@!338714886001524737>', embed = emb)
 #test space
 
