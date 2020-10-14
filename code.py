@@ -30,14 +30,7 @@ class TimeConverter(commands.Converter):
                 raise commands.BadArgument(f'{key} не число!')
         return time
 #test space
-@client.command()
-async def check(ctx):
-    await ctx.message.delete()
-    guild = ctx.guild
-    if guild.region is russia:
-        await ctx.send('Это сообщение меняется в зависимости от вашего региона')
-    else:
-        await ctx.send('This message changes depending on your region')
+
 #test space
 
 #Mod
@@ -297,7 +290,7 @@ async def guild(ctx):
     else:
         emb.add_field(name = f'Роли [{len(guild.roles)-1}]', value = ' '.join([role.mention for role in guild.roles[1:]]), inline = False)
     a = datetime.datetime.today().strftime('%d/%m/%Y %H:%M:%S')
-    b = guild.created_at.strftime('%d/%m/%Y %H:%M:%S UTC')
+    b = guild.created_at.strftime('%d/%m/%Y %H:%M:%S')
     c = a - b
     emb.add_field(name = 'Дата создания сервера', value = f'{c}', inline = False)
     emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
