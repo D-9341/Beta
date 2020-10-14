@@ -351,9 +351,12 @@ async def avatar(ctx, user: discord.Member = None):
     av = 'png'
     av1 = 'webp'
     av2 = 'jpg'
-    emb = discord.Embed(description = f'[Прямая ссылка (.png)]({user.avatar_url_as(format = av)})', colour = user.color)
+    av3 = 'gif'
+    emb = discord.Embed(colour = user.color)
+    emb.add_field(name = '.png', value = f'[Прямая ссылка (.png)]({user.avatar_url_as(format = av)})')
     emb.add_field(name = '.webp', value = f'[Ссылка]({user.avatar_url_as(format = av1)})')
     emb.add_field(name = '.jpg', value = f'[Ссылка]({user.avatar_url_as(format = av2)})')
+    emb.add_field(name = '.gif', value = f'[Ссылка]({user.avatar_url_as(format = av3)})')
     emb.set_author(name = user)
     emb.set_image(url = user.avatar_url_as(format = av))
     emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
