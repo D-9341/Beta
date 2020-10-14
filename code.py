@@ -298,7 +298,7 @@ async def guild(ctx):
         emb.add_field(name = f'Роли [{len(guild.roles)-1}]', value = ' '.join([role.mention for role in guild.roles[1:]]), inline = False)
     start = time()
     end = guild.created_at
-    emb.add_field(name = 'Дата создания сервера', value = f'{start-end} {guild.created_at.strftime('%d/%m/%Y %H:%M:%S UTC')}', inline = False)
+    emb.add_field(name = 'Дата создания сервера', value = f'{guild.created_at.strftime('%d/%m/%Y %H:%M:%S UTC')}', inline = False)
     emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     emb.set_thumbnail(url = guild.icon_url)
     await ctx.send(embed = emb)
