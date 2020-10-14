@@ -40,7 +40,7 @@ async def on_member_update(before, after):
             await channel.send(f'<@!338714886001524737>', embed = emb)
 
 @client.command()
-async def rolemembers(ctx, role: discord.Role):
+async def rolemembers(ctx, role: discord.Role, member: discord.Member = None):
     await ctx.message.delete()
     emb = discord.Embed(colour = discord.Color.green())
     emb.add_field(name = f'Участники с ролью {role.mention}', value = ', '.join([member.mention for member in role.members]))
