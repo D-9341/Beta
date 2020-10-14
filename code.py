@@ -320,7 +320,7 @@ async def role(ctx, *, role: discord.Role):
     emb.add_field(name = 'Упоминается?', value = role.mentionable)
     emb.add_field(name = 'Управляется интеграцией?', value = role.managed)
     emb.add_field(name = 'Позиция в списке', value = role.position)
-    emb.add_field(name = 'Обладатели роли', value = ', '.join([member.mention for member in role.members]), inline = False)
+    emb.add_field(name = 'Обладателей роли', value = len(role.members), inline = False)
     emb.add_field(name = 'Создана', value = role.created_at.strftime('%d/%m/%Y %H:%M:%S UTC'), inline = False)
     emb.add_field(name = 'Показывает участников отдельно?', value = role.hoist)
     emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
@@ -363,7 +363,7 @@ async def about(ctx, member: discord.Member = None):
         ac = f'{member.activity.type} {member.activity.name}'
     emb.add_field(name = 'Активность', value = ac)
     emb.add_field(name = 'Статус', value = member.status)
-    emb.add_field(name = f'Роли [{len(member.roles)-1}]', value=', '.join([role.mention for role in member.roles[1:]]), inline = False)
+    emb.add_field(name = f'Роли [{len(member.roles)-1}]', value = ', '.join([role.mention for role in member.roles[1:]]), inline = False)
     emb.add_field(name = 'Высшая Роль', value = member.top_role.mention, inline = False)
     emb.add_field(name = 'Бот?', value = bot)
     emb.set_thumbnail(url = member.avatar_url)
