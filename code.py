@@ -291,7 +291,7 @@ async def guild(ctx):
     emb = discord.Embed(title = f'Информация о {guild}', colour = discord.Color.green(), timestamp = ctx.message.created_at)
     emb.add_field(name = 'ID сервера', value = guild.id)
     emb.add_field(name = 'Человек', value = guild.member_count)
-    emb.add_field(name = 'Каналов', value = f'Текстовых {len(guild.text_channels)}| Голосовых {len(guild.voice_channels)}')
+    emb.add_field(name = 'Каналов', value = f'Текстовых {len(guild.text_channels)} | Голосовых {len(guild.voice_channels)}')
     if len(guild.roles) >= 15:
         emb.add_field(name = 'Роли', value = f'Слишком много для отрисовки ({len(guild.roles)-1})', inline = False)
     else:
