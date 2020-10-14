@@ -34,7 +34,7 @@ class TimeConverter(commands.Converter):
 async def check(ctx):
     await ctx.message.delete()
     guild = ctx.guild
-    if guild.region == 'russia':
+    if guild.region == russia:
         await ctx.send('Это сообщение меняется в зависимости от вашего региона')
     else:
         await ctx.send('This message changes depending on your region')
