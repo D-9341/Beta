@@ -149,64 +149,71 @@ async def take(ctx, member: discord.Member, *, role: discord.Role):
 async def mute(ctx, member: discord.Member, time: TimeConverter, *, reason: str = None):
     await ctx.message.delete()
     if member.id != 338714886001524737:
-        role = discord.utils.get(ctx.guild.roles, name = 'Muted')
-        if role != None:
-            await member.add_roles(role)
-            if reason == None:
-                reason = 'Не указана'
-            emb = discord.Embed(colour = member.color, timestamp = ctx.message.created_at)
-            emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
-            emb.add_field(name = 'В муте', value = f'{member.mention}')
-            emb.add_field(name = 'По причине', value = reason)
-            emb.add_field(name = 'Время мута', value = f'{time}s')
-            emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
-            await ctx.send(embed = emb, delete_after = time)
-            await asyncio.sleep(time)
+        if ctx.author.top_role == member.top_role:
+            emb = discord.Embed(description = f'{ctx.author.mention}, ваша высшая роль равна высшей роли {member.mention}. Мут отклонён.', colour = discord.Color.green())
+            await ctx.send(embed = emb)
+        elif ctx.author.top_role < member.top_role:
+            emb = discord.Embed(description = f'{ctx.author.mention}, ваша высшая роль ниже высшей роли {member.mention}. Мут отклонён.', colour = discord.Color.green())
+            await ctx.send(embed = emb)
+        else:
+            role = discord.utils.get(ctx.guild.roles, name = 'Muted')
             if role != None:
-                if role in member.roles:
-                    emb = discord.Embed(colour = member.color, timestamp = ctx.message.created_at)
-                    emb.add_field(name = 'Размучен по истечению времени', value = member.mention)
-                    emb.add_field(name = 'Был в муте по причине', value = reason)
-                    emb.add_field(name = 'Время мута составляло', value = f'{time}s')
-                    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
-                    await member.remove_roles(role)
-                    await ctx.send(f'{member.mention}', embed = emb)
+                await member.add_roles(role)
+                if reason == None:
+                    reason = 'Не указана.'
+                emb = discord.Embed(colour = member.color, timestamp = ctx.message.created_at)
+                emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
+                emb.add_field(name = 'В муте', value = f'{member.mention}')
+                emb.add_field(name = 'По причине', value = reason)
+                emb.add_field(name = 'Время мута', value = f'{time}s')
+                emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
+                await ctx.send(embed = emb, delete_after = time)
+                await asyncio.sleep(time)
+                if role != None:
+                    if role in member.roles:
+                        emb = discord.Embed(colour = member.color, timestamp = ctx.message.created_at)
+                        emb.add_field(name = 'Размучен по истечению времени', value = member.mention)
+                        emb.add_field(name = 'Был в муте по причине', value = reason)
+                        emb.add_field(name = 'Время мута составляло', value = f'{time}s')
+                        emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
+                        await member.remove_roles(role)
+                        await ctx.send(f'{member.mention}', embed = emb)
+                    else:
+                        emb = discord.Embed(description = f'Снятие мута для {member.mention} не требуется. Роли Muted не обнаружено в списке ролей участника.', colour = discord.Color.green())
+                        await ctx.send(embed = emb)
                 else:
-                    emb = discord.Embed(description = f'Снятие мута для {member.mention} не требуется. Роли Muted не обнаружено в списке ролей участника.', colour = discord.Color.green())
+                    emb = discord.Embed(description = f'{ctx.author.mention}, Я не могу снять мут у {member.mention} из-за того, что роль Muted была удалена/отредактирована!', colour = discord.Color.green(), timestamp = ctx.message.created_at)
                     await ctx.send(embed = emb)
             else:
-                emb = discord.Embed(description = f'{ctx.author.mention}, Я не могу снять мут у {member.mention} из-за того, что роль Muted была удалена/отредактирована!', colour = discord.Color.green(), timestamp = ctx.message.created_at)
-                await ctx.send(embed = emb)
-        else:
-            await ctx.guild.create_role(name = 'Muted', colour = discord.Colour(0x000001))
-            role = discord.utils.get(ctx.guild.roles, name = 'Muted')
-            emb1 = discord.Embed(description = f'{ctx.author.mention}, По причине того, что я не нашёл нужную роль, была создана роль {role.name} с цветом {role.colour}.', colour = discord.Color.green(), timestamp = ctx.message.created_at)
-            emb1.set_footer(text = 'Это сообщение должно показываться только 1 раз. Иначе, роль была удалена/отредактирована')
-            await ctx.send(embed = emb1)
-            await asyncio.sleep(3)
-            role = discord.utils.get(ctx.guild.roles, name = 'Muted')
-            await member.add_roles(role)
-            emb = discord.Embed(colour = member.color, timestamp = ctx.message.created_at)
-            emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
-            emb.add_field(name = 'В муте', value = f'{member.mention}')
-            emb.add_field(name = 'По причине', value = reason)
-            emb.add_field(name = 'Время мута', value = f'{time}s')
-            emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
-            await ctx.send(embed = emb, delete_after = time)
-            await asyncio.sleep(time)
-            if role != None:
-                if role in member.roles:
-                    emb = discord.Embed(colour = member.color, timestamp = ctx.message.created_at)
-                    emb.add_field(name = 'Размучен по истечению времени', value = member.mention)
-                    emb.add_field(name = 'По причине', value = reason)
-                    emb.add_field(name = 'Время мута составляло', value = f'{time}s')
-                    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
-                    await ctx.send(f'{member.mention}', embed = emb)
-                    await member.remove_roles(role)
-                else:
-                    emb = discord.Embed(description = f'Снятие мута для {member.mention} не требуется. Роли Muted не обнаружено в списке ролей участника.', colour = discord.Color.green())
-                    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
-                    await ctx.send(embed = emb)    
+                await ctx.guild.create_role(name = 'Muted', colour = discord.Colour(0x000001))
+                role = discord.utils.get(ctx.guild.roles, name = 'Muted')
+                emb1 = discord.Embed(description = f'{ctx.author.mention}, По причине того, что я не нашёл нужную роль, была создана роль {role.name} с цветом {role.colour}.', colour = discord.Color.green(), timestamp = ctx.message.created_at)
+                emb1.set_footer(text = 'Это сообщение должно показываться только 1 раз. Иначе, роль была удалена/отредактирована')
+                await ctx.send(embed = emb1)
+                await asyncio.sleep(3)
+                role = discord.utils.get(ctx.guild.roles, name = 'Muted')
+                await member.add_roles(role)
+                emb = discord.Embed(colour = member.color, timestamp = ctx.message.created_at)
+                emb.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
+                emb.add_field(name = 'В муте', value = f'{member.mention}')
+                emb.add_field(name = 'По причине', value = reason)
+                emb.add_field(name = 'Время мута', value = f'{time}s')
+                emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
+                await ctx.send(embed = emb, delete_after = time)
+                await asyncio.sleep(time)
+                if role != None:
+                    if role in member.roles:
+                        emb = discord.Embed(colour = member.color, timestamp = ctx.message.created_at)
+                        emb.add_field(name = 'Размучен по истечению времени', value = member.mention)
+                        emb.add_field(name = 'По причине', value = reason)
+                        emb.add_field(name = 'Время мута составляло', value = f'{time}s')
+                        emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
+                        await ctx.send(f'{member.mention}', embed = emb)
+                        await member.remove_roles(role)
+                    else:
+                        emb = discord.Embed(description = f'Снятие мута для {member.mention} не требуется. Роли Muted не обнаружено в списке ролей участника.', colour = discord.Color.green())
+                        emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
+                        await ctx.send(embed = emb)    
     else:
         emb = discord.Embed(description = f'Извините, {ctx.author.mention}, но вы не можете замутить моего создателя!', colour = discord.Color.green())
         emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
@@ -291,10 +298,15 @@ async def guild(ctx):
     emb.add_field(name = 'ID сервера', value = guild.id)
     emb.add_field(name = 'Участников', value = guild.member_count)
     emb.add_field(name = 'Каналов', value = f'Текстовых {len(guild.text_channels)} | Голосовых {len(guild.voice_channels)}')
-    if len(guild.roles) >= 15:
-        emb.add_field(name = 'Роли', value = f'Слишком много для отрисовки ({len(guild.roles)-1})', inline = False)
-    else:
-        emb.add_field(name = f'Роли ({len(guild.roles)-1})', value = ', '.join([role.mention for role in guild.roles[1:]]), inline = False)
+    limit = len(guild.roles)
+    if limit >= 20:
+        emb.add_field(name = 'Роли', value = f'Слишком много для отрисовки ({len(guild.roles)-1}) [лимит 20]', inline = False)
+    elif limit == 19:
+        emb.add_field(name = f'Роли ({len(guild.roles)-1}) [1 до лимита]', value = ', '.join([role.mention for role in guild.roles[1:]]), inline = False)
+    elif limit == 18:
+        emb.add_field(name = f'Роли ({len(guild.roles)-1}) [2 до лимита]', value = ', '.join([role.mention for role in guild.roles[1:]]), inline = False)
+    elif limit == 17:
+        emb.add_field(name = f'Роли ({len(guild.roles)-1}) [3 до лимита]', value = ', '.join([role.mention for role in guild.roles[1:]]), inline = False)
     now = datetime.datetime.today()
     then = guild.created_at
     delta = now - then
@@ -379,10 +391,15 @@ async def about(ctx, member: discord.Member = None):
     emb.add_field(name = 'Упоминание', value = member.mention)
     emb.add_field(name = 'Raw имя', value = member.name)
     emb.add_field(name = 'Никнейм', value = member.nick)
-    if len(member.roles) >= 15:
-        emb.add_field(name = 'Роли', value = f'Слишком много для отрисовки ({len(member.roles)-1})', inline = False)
-    else:
-        emb.add_field(name = f'Роли ({len(member.roles)-1})', value = ', '.join([role.mention for role in member.roles[1:]]), inline = False)
+    limit = len(member.roles)
+    if limit >= 20:
+        emb.add_field(name = 'Роли', value = f'Слишком много для отрисовки ({len(member.roles)-1}) [лимит 20]', inline = False)
+    elif limit == 19:
+        emb.add_field(name = f'Роли ({len(member.roles)-1}) [1 до лимита]', value = ', '.join([role.mention for role in member.roles[1:]]), inline = False)
+    elif limit == 18:
+        emb.add_field(name = f'Роли ({len(member.roles)-1}) [2 до лимита]', value = ', '.join([role.mention for role in member.roles[1:]]), inline = False)
+    elif limit == 17:
+        emb.add_field(name = f'Роли ({len(member.roles)-1}) [3 до лимита]', value = ', '.join([role.mention for role in member.roles[1:]]), inline = False)
     emb.add_field(name = 'Высшая Роль', value = member.top_role.mention, inline = False)
     emb.add_field(name = 'Бот?', value = bot)
     emb.set_thumbnail(url = member.avatar_url)
@@ -606,6 +623,7 @@ async def info(ctx):
     emb.add_field(name = 'Написан на', value = 'discord.py')
     emb.add_field(name = 'Разработчик', value = 'сасиска#2472')
     emb.add_field(name = 'Веб-сайт', value = '```http://ru-unioncraft.ru/```')
+    emb.add_field(name = 'Существую на', value = f'{len(client.guilds)} серверах')
     emb.set_footer(text = 'Данное приложение не имеет никакого причастия к игре Warframe.', icon_url = 'https://i.playground.ru/p/yVaOZNSTdgUTxmzy_qvzzQ.png')
     await ctx.send(embed = emb)
 
@@ -613,7 +631,7 @@ async def info(ctx):
 @commands.cooldown(1, 3, commands.BucketType.default)
 async def invite(ctx):
     await ctx.message.delete()
-    emb = discord.Embed(description = '[Ссылка](https://discord.com/oauth2/authorize?client_id=764882153812787250&scope=bot&permissions=8) для быстрого приглашения бета версии на сервера.', colour = discord.Color.green())
+    emb = discord.Embed(description = '[Ссылка](https://discord.com/oauth2/authorize?client_id=764882153812787250&scope=bot&permissions=8) для быстрого приглашения бета версии на сервера. Эта версия отличается ранними апдейтами, но недоступна для массовой публики. Однако ссылку может получить каждый, прописав эту команду.', colour = discord.Color.green())
     await ctx.send(embed = emb)
 #Cephalon
         
@@ -639,7 +657,6 @@ async def help(ctx, arg = None):
         emb.add_field(name = 'cy|join', value = 'Бот заходит в голосовой канал.')
         emb.add_field(name = 'cy|kick', value = 'Кик человека.')
         emb.add_field(name = 'cy|mute', value = 'Мут человека.', inline = False)
-        emb.add_field(name = 'cy|pro', value = 'Показывает информацию о про версии. Также, проверяет на наличие активных подписок.')
         emb.add_field(name = 'cy|remind', value = 'Может напомнить вам о событии, которое вы не хотите пропустить.')
         emb.add_field(name = 'cy|role', value = 'Показывает информацию о роли')
         emb.add_field(name = 'cy|take', value = 'Забирает роль.', inline = False)
@@ -689,14 +706,6 @@ async def help(ctx, arg = None):
 @client.event
 async def on_ready():
     await client.change_presence(status = discord.Status.online, activity = discord.Activity(type = discord.ActivityType.watching, name = 'Discord API'))
-    
-@client.event
-async def on_command_error(ctx, error):
-    if isinstance(error, commands.CommandNotFound):
-        await ctx.message.delete()
-        emb = discord.Embed(description = f'{ctx.author.mention}, я не знаю такую команду!', colour = discord.Color.green())
-        emb.set_footer(text = 'Считаете, что такая команда должна быть? Напишите сасиска#2472 и опишите её суть!')
-        await ctx.send(embed = emb)
 
 @client.event
 async def on_command_error(ctx, error):
