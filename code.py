@@ -294,7 +294,7 @@ async def guild(ctx):
     if len(guild.roles) >= 15:
         emb.add_field(name = 'Роли', value = f'Слишком много для отрисовки ({len(guild.roles)-1})', inline = False)
     else:
-        emb.add_field(name = f'Роли [{len(guild.roles)-1}]', value = ', '.join([role.mention for role in guild.roles[1:]]), inline = False)
+        emb.add_field(name = f'Роли ({len(guild.roles)-1})', value = ', '.join([role.mention for role in guild.roles[1:]]), inline = False)
     now = datetime.datetime.today()
     then = guild.created_at
     delta = now - then
@@ -379,7 +379,10 @@ async def about(ctx, member: discord.Member = None):
     emb.add_field(name = 'Упоминание', value = member.mention)
     emb.add_field(name = 'Raw имя', value = member.name)
     emb.add_field(name = 'Никнейм', value = member.nick)
-    emb.add_field(name = f'Роли [{len(member.roles)-1}]', value = ', '.join([role.mention for role in member.roles[1:]]), inline = False)
+    if len(member.roles) >= 15:
+        emb.add_field(name = 'Роли', value = f'Слишком много для отрисовки ({len(member.roles)-1})', inline = False)
+    else:
+        emb.add_field(name = f'Роли ({len(member.roles)-1})', value = ', '.join([role.mention for role in member.roles[1:]]), inline = False)
     emb.add_field(name = 'Высшая Роль', value = member.top_role.mention, inline = False)
     emb.add_field(name = 'Бот?', value = bot)
     emb.set_thumbnail(url = member.avatar_url)
