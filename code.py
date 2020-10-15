@@ -374,13 +374,12 @@ async def about(ctx, member: discord.Member = None):
     then1 = member.joined_at
     delta1 = now - then1
     d1 = member.joined_at.strftime('%d/%m/%Y %H:%M:%S UTC')
-    li = ', '.join([role.mention for role in member.roles[1:]])
     emb.add_field(name = 'Создан', value = f'{delta.days} дня(ей) назад. ({d})', inline = False)
     emb.add_field(name = 'Вошёл', value = f'{delta1.days} дня(ей) назад. ({d1})', inline = False)
     emb.add_field(name = 'Упоминание', value = member.mention)
     emb.add_field(name = 'Raw имя', value = member.name)
     emb.add_field(name = 'Никнейм', value = member.nick)
-    emb.add_field(name = f'Роли [{len(member.roles)-1}]', value = li.reverse(), inline = False)
+    emb.add_field(name = f'Роли [{len(member.roles)-1}]', value = ', '.join([role.mention for role in member.roles[1:]]), inline = False)
     emb.add_field(name = 'Высшая Роль', value = member.top_role.mention, inline = False)
     emb.add_field(name = 'Бот?', value = bot)
     emb.set_thumbnail(url = member.avatar_url)
