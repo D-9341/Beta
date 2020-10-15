@@ -294,8 +294,10 @@ async def clear(ctx, amount: int, confirm: str = None):
 async def guild(ctx):
     await ctx.message.delete()
     guild = ctx.guild
-    emb = discord.Embed(title = f'Информация о {guild}', colour = discord.Color.green(), timestamp = ctx.message.created_at)
+    emb = discord.Embed(colour = discord.Color.green(), timestamp = ctx.message.created_at)
+    emb.set_author(name = guild, icon_url = guild.icon_url)
     emb.add_field(name = 'ID сервера', value = guild.id)
+    emb.add_field(name = 'Голосовой регион', value = guild.region)
     emb.add_field(name = 'Участников', value = guild.member_count)
     emb.add_field(name = 'Каналов', value = f'Текстовых {len(guild.text_channels)} | Голосовых {len(guild.voice_channels)}')
     limit = len(guild.roles)
@@ -381,7 +383,8 @@ async def about(ctx, member: discord.Member = None):
         bot = 'Неа'
     elif member.bot == True:
         bot = 'Ага'
-    emb = discord.Embed(title = f'Информация о {member}', colour = member.color, timestamp = ctx.message.created_at)
+    emb = discord.Embed(colour = member.color, timestamp = ctx.message.created_at)
+    emb.set_author(name = member, icon_url = member.icon_url)
     emb.add_field(name = 'ID', value = member.id)
     now = datetime.datetime.today()
     then = member.created_at
