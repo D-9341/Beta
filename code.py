@@ -294,7 +294,7 @@ async def guild(ctx):
     if len(guild.roles) >= 15:
         emb.add_field(name = 'Роли', value = f'Слишком много для отрисовки ({len(guild.roles)-1})', inline = False)
     else:
-        emb.add_field(name = f'Роли [{len(guild.roles)-1}]', value = ', '.join([role.mention for role in guild.roles[1:]]), inline = False)
+        emb.add_field(name = f'Роли [{len(guild.roles)-1}]', value = ', '.join([role.mention for role in guild.roles[::1]]), inline = False)
     now = datetime.datetime.today()
     then = guild.created_at
     delta = now - then
