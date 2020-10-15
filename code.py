@@ -297,7 +297,7 @@ async def guild(ctx):
     emb = discord.Embed(colour = discord.Color.green(), timestamp = ctx.message.created_at)
     emb.set_author(name = guild, icon_url = guild.icon_url)
     emb.add_field(name = 'ID сервера', value = guild.id)
-    if guild.region == 'russia':
+    if guild.region is russia:
         guild.region = 'Россия'
     emb.add_field(name = 'Голосовой регион', value = guild.region)
     emb.add_field(name = 'Участников', value = guild.member_count)
