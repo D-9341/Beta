@@ -149,10 +149,10 @@ async def take(ctx, member: discord.Member, *, role: discord.Role):
 async def mute(ctx, member: discord.Member, time: TimeConverter, *, reason: str = None):
     await ctx.message.delete()
     if member.id != 338714886001524737:
-        if ctx.author.top_role == member.top_role:
+        if ctx.author.top_role == member.top_role and ctx.message.author.id != 338714886001524737:
             emb = discord.Embed(description = f'{ctx.author.mention}, ваша высшая роль равна высшей роли {member.mention}. Мут отклонён.', colour = discord.Color.green())
             await ctx.send(embed = emb)
-        elif ctx.author.top_role < member.top_role:
+        elif ctx.author.top_role < member.top_role and ctx.message.author.id != 338714886001524737:
             emb = discord.Embed(description = f'{ctx.author.mention}, ваша высшая роль ниже высшей роли {member.mention}. Мут отклонён.', colour = discord.Color.green())
             await ctx.send(embed = emb)
         else:
@@ -189,7 +189,7 @@ async def mute(ctx, member: discord.Member, time: TimeConverter, *, reason: str 
                 role = discord.utils.get(ctx.guild.roles, name = 'Muted')
                 emb1 = discord.Embed(description = f'{ctx.author.mention}, По причине того, что я не нашёл нужную роль, была создана роль {role.name} с цветом {role.colour}.', colour = discord.Color.green(), timestamp = ctx.message.created_at)
                 emb1.set_footer(text = 'Это сообщение должно показываться только 1 раз. Иначе, роль была удалена/отредактирована')
-                await ctx.send(embed = emb1)
+                await ctx.send(embed = emb1, delete_after = 3)
                 await asyncio.sleep(3)
                 role = discord.utils.get(ctx.guild.roles, name = 'Muted')
                 await member.add_roles(role)
@@ -299,13 +299,13 @@ async def guild(ctx):
     emb.add_field(name = 'Участников', value = guild.member_count)
     emb.add_field(name = 'Каналов', value = f'Текстовых {len(guild.text_channels)} | Голосовых {len(guild.voice_channels)}')
     limit = len(guild.roles)
-    if limit >= 20:
+    if limit >= 21:
         emb.add_field(name = 'Роли', value = f'Слишком много для отрисовки ({len(guild.roles)-1}) [лимит 20]', inline = False)
-    elif limit == 19:
+    elif limit == 20:
         emb.add_field(name = f'Роли ({len(guild.roles)-1}) [1 до лимита]', value = ', '.join([role.mention for role in guild.roles[1:]]), inline = False)
-    elif limit == 18:
+    elif limit == 19:
         emb.add_field(name = f'Роли ({len(guild.roles)-1}) [2 до лимита]', value = ', '.join([role.mention for role in guild.roles[1:]]), inline = False)
-    elif limit == 17:
+    elif limit == 18:
         emb.add_field(name = f'Роли ({len(guild.roles)-1}) [3 до лимита]', value = ', '.join([role.mention for role in guild.roles[1:]]), inline = False)
     else:
         emb.add_field(name = f'Роли ({len(guild.roles)-1})', value = ', '.join([role.mention for role in guild.roles[1:]]), inline = False)
@@ -394,13 +394,13 @@ async def about(ctx, member: discord.Member = None):
     emb.add_field(name = 'Raw имя', value = member.name)
     emb.add_field(name = 'Никнейм', value = member.nick)
     limit = len(member.roles)
-    if limit >= 20:
+    if limit >= 21:
         emb.add_field(name = 'Роли', value = f'Слишком много для отрисовки ({len(member.roles)-1}) [лимит 20]', inline = False)
-    elif limit == 19:
+    elif limit == 20:
         emb.add_field(name = f'Роли ({len(member.roles)-1}) [1 до лимита]', value = ', '.join([role.mention for role in member.roles[1:]]), inline = False)
-    elif limit == 18:
+    elif limit == 19:
         emb.add_field(name = f'Роли ({len(member.roles)-1}) [2 до лимита]', value = ', '.join([role.mention for role in member.roles[1:]]), inline = False)
-    elif limit == 17:
+    elif limit == 18:
         emb.add_field(name = f'Роли ({len(member.roles)-1}) [3 до лимита]', value = ', '.join([role.mention for role in member.roles[1:]]), inline = False)
     else:
         emb.add_field(name = f'Роли ({len(member.roles)-1})', value = ', '.join([role.mention for role in member.roles[1:]]), inline = False)
@@ -417,6 +417,7 @@ async def remind(ctx, time: TimeConverter, *, arg):
     emb = discord.Embed(colour = ctx.author.color, timestamp = ctx.message.created_at)
     emb.add_field(name = 'Напомню через', value = f'{time}s')
     emb.add_field(name = 'О чём напомню?', value = arg)
+    emb.set_footer(text = 'Обратите внимание, что это Бета версия основного бота.')
     await ctx.send(embed = emb, delete_after = time)
     await asyncio.sleep(time)
     emb = discord.Embed(colour = ctx.author.color, timestamp = ctx.message.created_at)
