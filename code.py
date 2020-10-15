@@ -299,8 +299,10 @@ async def guild(ctx):
     emb.add_field(name = 'Участников', value = guild.member_count)
     emb.add_field(name = 'Каналов', value = f'Текстовых {len(guild.text_channels)} | Голосовых {len(guild.voice_channels)}')
     limit = len(guild.roles)
-    if limit >= 21:
+    if limit > 21:
         emb.add_field(name = 'Роли', value = f'Слишком много для отрисовки ({len(guild.roles)-1}) [лимит 20]', inline = False)
+    elif limit == 21:
+        emb.add_field(name = f'Роли ({len(guild.roles)-1}) [0 до лимита]', value = ', '.join([role.mention for role in guild.roles[1:]]), inline = False)
     elif limit == 20:
         emb.add_field(name = f'Роли ({len(guild.roles)-1}) [1 до лимита]', value = ', '.join([role.mention for role in guild.roles[1:]]), inline = False)
     elif limit == 19:
@@ -394,8 +396,10 @@ async def about(ctx, member: discord.Member = None):
     emb.add_field(name = 'Raw имя', value = member.name)
     emb.add_field(name = 'Никнейм', value = member.nick)
     limit = len(member.roles)
-    if limit >= 21:
+    if limit > 21:
         emb.add_field(name = 'Роли', value = f'Слишком много для отрисовки ({len(member.roles)-1}) [лимит 20]', inline = False)
+    elif limit == 21:
+        emb.add_field(name = f'Роли ({len(member.roles)-1}) [0 до лимита]', value = ', '.join([role.mention for role in member.roles[1:]]), inline = False)
     elif limit == 20:
         emb.add_field(name = f'Роли ({len(member.roles)-1}) [1 до лимита]', value = ', '.join([role.mention for role in member.roles[1:]]), inline = False)
     elif limit == 19:
