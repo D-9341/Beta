@@ -382,7 +382,6 @@ async def about(ctx, member: discord.Member = None):
     elif member.bot == True:
         bot = 'Ага'
     emb = discord.Embed(colour = member.color, timestamp = ctx.message.created_at)
-    emb.set_author(name = member, icon_url = member.icon_url)
     emb.add_field(name = 'ID', value = member.id)
     now = datetime.datetime.today()
     then = member.created_at
