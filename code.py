@@ -170,7 +170,7 @@ async def mute(ctx, member: discord.Member, time: TimeConverter, *, reason: str 
                 await ctx.send(embed = emb, delete_after = time)
                 await asyncio.sleep(time)
                 if role != None:
-                    if role is in member.roles:
+                    if role in member.roles:
                         emb = discord.Embed(colour = member.color, timestamp = ctx.message.created_at)
                         emb.add_field(name = 'Размучен по истечению времени', value = member.mention)
                         emb.add_field(name = 'Был в муте по причине', value = reason)
