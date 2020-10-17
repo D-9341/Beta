@@ -55,7 +55,7 @@ async def kick(ctx, member: discord.Member, *, reason: str = None):
             if ctx.author.top_role == member.top_role:
                 emb = discord.Embed(description = f'{ctx.author.mention}, ваша высшая роль равна высшей роли {member.mention}. Кик отклонён.', colour = discord.Color.green())
                 await ctx.send(embed = emb)
-            elif ctx.author.top_role < member.top_role:
+            elif mebmer.top_role > ctx.author.top_role:
                 emb = discord.Embed(description = f'{ctx.author.mention}, ваша высшая роль ниже высшей роли {member.mention}. Кик отклонён.', colour = discord.Color.green())
                 await ctx.send(embed = emb)
             else:
