@@ -25,9 +25,9 @@ class TimeConverter(commands.Converter):
             try:
                 time += time_dict[value] * float(key)
             except KeyError:
-                raise commands.BadArgument(f'{value} не является правильным аргументом! Правильные: h|m|s|d')
+                await ctx.send(f'{value} не является правильным аргументом! Правильные: h|m|s|d')
             except ValueError:
-                raise commands.BadArgument(f'{key} не число!')
+                await ctx.send(f'{key} не число!')
         return time
 #test space
 
