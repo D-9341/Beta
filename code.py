@@ -30,7 +30,19 @@ class TimeConverter(commands.Converter):
                 await ctx.send(f'{key} не число!')
         return time
 #test space
-
+@client.event
+async def on_member_join(member):
+    channel = client.get_channel(693929823030214658)
+    emb = discord.Embed(description = f'{member.mention} ({member.name}) Has entered the `{member.guild.name}`, 👋', colour = discord.Color.orange())
+    emb.set_footer(text = 'Cephalon Cy by сасиска#2472')
+    await channel.send(embed = emb)
+    
+@client.event
+async def on_member_remove(member):
+    channel = client.get_channel(693929823030214658)
+    emb = discord.Embed(description = f'{member.mention} ({member.name}) Has exited the `{member.guild.name}`...', colour = discord.Color.red())
+    emb.set_footer(text = 'Cephalon Cy by сасиска#2472')
+    await channel.send(embed = emb)
 #test space
 
 #Mod
