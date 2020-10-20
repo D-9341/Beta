@@ -308,7 +308,7 @@ async def guild(ctx):
     emb.set_author(name = guild, icon_url = guild.icon_url)
     emb.add_field(name = 'ID сервера', value = guild.id)
     emb.add_field(name = 'Голосовой регион', value = guild.region)
-    emb.add_field(name = 'Участников', value = guild.member_count + 1)
+    emb.add_field(name = 'Участников', value = guild.member_count)
     emb.add_field(name = 'Каналов', value = f'Текстовых {len(guild.text_channels)} | Голосовых {len(guild.voice_channels)}')
     limit = len(guild.roles)
     if limit > 21:
