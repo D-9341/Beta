@@ -30,7 +30,7 @@ class TimeConverter(commands.Converter):
                 await ctx.send(f'{key} не число!')
         return time
 #test space
-@client.command
+@client.command()
 async def niggers(ctx):
     await ctx.message.delete()
     emb = discord.Embed(description = [осуждающее видео](https://vk.com/video-184856829_456240358)
