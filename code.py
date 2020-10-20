@@ -609,7 +609,8 @@ async def edit(ctx, arg, *, text):
     await ctx.message.delete()
     message = await ctx.fetch_message(id = arg)
     if text == '--delete':
-        await message.delete()
+        await message.edit(content = None)
+        await ctx.send('👌', delete_after = 1)
     else:
         await message.edit(content = text)
         await ctx.send('👌', delete_after = 1)
