@@ -10,7 +10,7 @@ import discord
 from discord.ext import commands
 from discord.utils import get
 
-client = commands.Bot(command_prefix = commands.when_mentioned_or('cy|'), owner_id = 338714886001524737)
+client = commands.Bot(command_prefix = commands.when_mentioned_or('cy|'), intents = discord.Intents.all(), owner_id = 338714886001524737)
 client.remove_command('help')
 
 time_regex = re.compile("(?:(\d{1,5})(h|s|m|d))+?")
